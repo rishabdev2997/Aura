@@ -4,7 +4,7 @@ import { Redirect, router } from "expo-router";
 import { ScrollView, Text, View ,Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from "../constants";
-import CunstomButton from '../components/CunstomButton';
+import CustomButton from '../components/CustomButton';
 
 export default function App() {
   return (
@@ -38,7 +38,7 @@ export default function App() {
             Where Creativity Meets Innovation: Embark on a Journey of Limitless
             Exploration with Aora
           </Text>
-          <CunstomButton
+          <CustomButton
             title="Continue with Email"
             handlePress={() => router.push("/sign-in")}
             containerStyles="w-full mt-7"
