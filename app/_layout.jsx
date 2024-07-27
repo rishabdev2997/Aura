@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { Slot,SplashScreen, Stack } from 'expo-router';
-import {useFonts} from 'expo-font'
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { useFonts } from "expo-font";
+import "react-native-url-polyfill/auto";
+import { SplashScreen, Stack } from "expo-router";
 
+import GlobalProvider from "../context/GlobalProvider";
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
@@ -18,22 +21,32 @@ const RootLayout = () => {
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
 
-  useEffect(()=>{
-    if(error) throw error;
-    if(fontsLoaded) SplashScreen.hideAsync();
-  },[fontsLoaded, error]);
+  useEffect(() => {
+    if (error) throw error;
 
-  if(!fontsLoaded && !error) return null; 
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, error]);
 
-  return(
-    <Stack>
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  if (!fontsLoaded && !error) {
+    return null;
+  }
+
+  return (
+    <GlobalProvider>
+      <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="search/[query]" options={{ headerShown: false }} />
-    </Stack>
-  ) 
-}
+      </Stack>
+    </GlobalProvider>
+  );
+};
 
-export default RootLayout
-
+export default RootLayout;
