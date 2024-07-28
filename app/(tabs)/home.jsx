@@ -19,26 +19,28 @@ const Home = () => {
     setRefreshing(false);
   };
 
-  // one flatlist
-  // with list header
-  // and horizontal flatlist
+  const renderItem = ({ item }) => {
+    const creator = item.creator || {};
+    const username = creator.username || "Unknown User";
+    const avatar = creator.avatar || images.defaultAvatar;
 
-  //  we cannot do that with just scrollview as there's both horizontal and vertical scroll (two flat lists, within trending)
+    return (
+      <VideoCard
+        title={item.title}
+        thumbnail={item.thumbnail}
+        video={item.video}
+        creator={username}
+        avatar={avatar}
+      />
+    );
+  };
 
   return (
     <SafeAreaView className="bg-primary">
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => (
-          <VideoCard
-            title={item.title}
-            thumbnail={item.thumbnail}
-            video={item.video}
-            creator={item.creator.username}
-            avatar={item.creator.avatar}
-          />
-        )}
+        renderItem={renderItem}
         ListHeaderComponent={() => (
           <View className="flex my-6 px-4 space-y-6">
             <View className="flex justify-between items-start flex-row mb-6">

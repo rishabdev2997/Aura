@@ -28,11 +28,12 @@ const Create = () => {
   });
 
   const openPicker = async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type:
-        selectType === "image"
-          ? ["image/png", "image/jpg"]
-          : ["video/mp4", "video/gif"],
+    let result = await ImagePicker.
+    launchImageLibraryAsync({
+      mediaTypes: selectType ==="image" ? ImagePicker.MediaTypes.Images: ImagePicker.MediaTypesOptions.Videos,
+      allowEditing: true,
+      aspect:[4,3],
+      quality:1,
     });
 
     if (!result.canceled) {
